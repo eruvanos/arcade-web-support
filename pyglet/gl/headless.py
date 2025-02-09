@@ -108,11 +108,30 @@ class HeadlessContext(Context):
         super(HeadlessContext, self).__init__(config, share)
 
         self.display_connection = config.canvas.display._display_connection
+        print("DEBUG", config)
 
         if pyglet.WebGL:
-            import embed
-            self.egl_context = embed.webgl()
+            # TODO embed.webgl() comes from the python-wasm environment.
+            #  which is not available in the current environment
+            # we need to find a way to create a webgl context in the current environment (should be easy)
+        #     # import embed
+        #     # self.egl_context = embed.webgl()
+
+            # from pyscript import document
+            # contextAttributes = {
+            #     "stencil": True,
+            #     "depth": True,
+            #     "antialias": True,
+            #     "preserveDrawingBuffer": False
+            # }
+            #
+            # canvasElement = document.getElementById("canvas")
+            # _ = canvasElement.getContext("webgl2", contextAttributes)
+            # self.egl_context = egl.eglGetCurrentContext()
             return
+        #
+        #     return
+
         self.egl_context = self._create_egl_context(share)
         if not self.egl_context:
             raise gl.ContextException('Could not create GL context')

@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+    <!-- Recommended meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <!-- PyScript CSS -->
+    <link rel="stylesheet" href="https://pyscript.net/releases/2025.2.2/core.css">
+    <!-- This script tag bootstraps PyScript -->
+    <script type="module" src="https://pyscript.net/releases/2025.2.2/core.js"></script>
+</head>
+<body>
+
+<!-- Run with `python -m -m http.server -d ./ -b 127.0.0.1 -->
+
+<canvas id="canvas"></canvas>
+
+<script type="py" config='{"files":{"pyglet.zip":"./*"}}'>
+
+    import pyodide_js
+    from pyscript import document
+
+    contextAttributes = {
+                    "stencil": True,
+                    "depth": True,
+                    "antialias": True,
+                    "preserveDrawingBuffer": False
+                }
+
+    canvasElement = document.getElementById("canvas")
+    context = canvasElement.getContext("webgl2", contextAttributes)
+
+    if not context:
+        print("WebGL2 not supported, falling back on WebGL")
+        context = canvasElement.getContext("webgl", { "stencil": True })
+
+        if not context:
+            print("WebGL not supported, falling back on 2d canvas")
+            raise Exception("Your browser does not support WebGL or WebGL2")
+
+    else:
+        print("WebGL2 supported")
+
+    pyodide_js.canvas.setCanvas3D(canvasElement)
+
+    import pyglet
+    print(pyglet.version)
+
+    pyglet.options['headless'] = True
+
+    window = pyglet.window.Window()
+    # image = pyglet.resource.image("kitten.jpg")
+
+
+    @window.event
+    def on_draw():
+        window.clear()
+
+
+    # image.blit(0, 0)
+
+    pyglet.app.run()
+
+</script>
+
+
+</body>
+</html>

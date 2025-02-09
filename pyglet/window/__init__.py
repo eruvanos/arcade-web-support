@@ -552,14 +552,17 @@ class BaseWindow(EventDispatcher, metaclass=_WindowMetaclass):
         self._height = height
 
         if pyglet.WebGL:
+
             canvas = os.environ.get("WebGL","#canvas")[1:]
             print(f"WebGL: id={canvas} {self._width}x{self._height}")
-            platform.window.eval(f"""
-const canvas = document.getElementById("{canvas}")
-canvas.width = "{self._width}"
-canvas.height= "{self._height}"
-window_resize()
-""")
+
+#             from pyscript import window
+#             window.eval(f"""
+# const canvas = document.getElementById("{canvas}")
+# canvas.width = "{self._width}"
+# canvas.height= "{self._height}"
+# window_resize()
+# """)
 
 
         if not context:

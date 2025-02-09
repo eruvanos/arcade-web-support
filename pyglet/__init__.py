@@ -134,7 +134,7 @@ options = {
     'xlib_fullscreen_override_redirect': False,
     'search_local_libs': True,
     'win32_gdi_font': False,
-    'headless': False,
+    'headless': True,
     'headless_device': 0,
     'win32_disable_shaping': False,
     'dw_legacy_naming': False,
